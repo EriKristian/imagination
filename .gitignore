@@ -1,0 +1,30 @@
+# Unity folders
+Library/
+Temp/
+Obj/
+Build/
+Builds/
+UserSettings/
+
+# Unity metadata
+*.pidb.meta
+*.booproj
+*.booproj.user
+*.user
+*.userprefs
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.user
+*.idea
+*.vscode
+
+# Unity generated
+*.log
+*.toml
+.DS_Store
+Thumbs.db
+
+# Asset meta files (uncomment to ignore)
+# *.meta
