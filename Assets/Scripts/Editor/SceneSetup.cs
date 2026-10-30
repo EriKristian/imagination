@@ -19,6 +19,10 @@ public static class SceneSetup
         CreateClassroomScene();
         CreateFightingScene();
 
+        ProceduralSpriteGenerator.GenerateAll();
+        ProceduralSpriteGenerator.AssignPlaceholdersToScene("Assets/Scenes/Classroom.unity");
+        ProceduralSpriteGenerator.AssignPlaceholdersToScene("Assets/Scenes/Fighting_Level1.unity");
+
         SetBuildScenes();
 
         EditorUtility.DisplayDialog("Imagination",
