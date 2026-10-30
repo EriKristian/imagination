@@ -15,7 +15,6 @@ namespace Imagination.Core
                 Destroy(gameObject);
                 return;
             }
-
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
@@ -27,7 +26,7 @@ namespace Imagination.Core
 
         private IEnumerator LoadSceneAsync(string sceneName)
         {
-            var loadingScreen = UIManager.Instance?.ShowLoadingScreen() ?? false;
+            UI.UIManager.Instance?.ShowLoadingScreen();
 
             yield return new WaitForSeconds(0.1f);
 
@@ -35,9 +34,7 @@ namespace Imagination.Core
             asyncLoad.allowSceneActivation = false;
 
             while (asyncLoad.progress < 0.9f)
-            {
                 yield return null;
-            }
 
             asyncLoad.allowSceneActivation = true;
         }

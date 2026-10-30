@@ -1,4 +1,6 @@
 using UnityEngine;
+using Imagination.Managers;
+using Imagination.Core;
 
 namespace Imagination.Core
 {

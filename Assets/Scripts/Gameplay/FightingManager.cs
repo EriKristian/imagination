@@ -1,5 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using Imagination.Core;
+using Imagination.Managers;
+using Imagination.UI;
 
 namespace Imagination.Gameplay
 {
@@ -9,7 +13,6 @@ namespace Imagination.Gameplay
         public Transform player;
         public float playerSpeed = 3f;
         public float attackRange = 1f;
-        public LayerMask hitLayer;
 
         [Header("Opponent")]
         public Transform opponent;
@@ -24,7 +27,7 @@ namespace Imagination.Gameplay
         [Header("UI")]
         public Slider playerHealthBar;
         public Slider opponentHealthBar;
-        public TextMeshUGUI timerText;
+        public TMP_Text timerText;
         public GameObject victoryScreen;
         public GameObject defeatScreen;
 
@@ -33,17 +36,11 @@ namespace Imagination.Gameplay
         private float currentTime;
         private bool isRoundActive = false;
 
-        private Animator playerAnimator;
-        private Animator opponentAnimator;
-
         private void Start()
         {
             playerHealth = playerMaxHealth;
             opponentHealth = opponentMaxHealth;
             currentTime = roundTime;
-
-            playerAnimator = player.GetComponent<Animator>();
-            opponentAnimator = opponent.GetComponent<Animator>();
 
             UpdateUI();
             UIManager.Instance.ToggleTouchControls(true);
@@ -53,7 +50,6 @@ namespace Imagination.Gameplay
         private void Update()
         {
             if (!isRoundActive) return;
-
             HandlePlayerInput();
             HandleOpponentAI();
             UpdateTimer();
@@ -108,23 +104,22 @@ namespace Imagination.Gameplay
             if (Vector2.Distance(attacker.position, target.position) <= range)
             {
                 bool isPlayerTarget = (target == player);
+                target.GetComponent<Animator>()?.SetTrigger("Hit");
+
                 if (isPlayerTarget)
                 {
                     playerHealth -= 10;
                     playerHealth = Mathf.Max(playerHealth, 0);
+                    if (playerHealth <= 0)
+                        EndRound(false);
                 }
                 else
                 {
                     opponentHealth -= 10;
                     opponentHealth = Mathf.Max(opponentHealth, 0);
+                    if (opponentHealth <= 0)
+                        EndRound(true);
                 }
-
-                target.GetComponent<Animator>()?.SetTrigger("Hit");
-
-                if (isPlayerTarget && playerHealth <= 0)
-                    EndRound(false);
-                else if (!isPlayerTarget && opponentHealth <= 0)
-                    EndRound(true);
 
                 UpdateUI();
             }

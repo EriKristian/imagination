@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Imagination.UI
 {
@@ -16,14 +17,14 @@ namespace Imagination.UI
         public GameObject touchControls;
 
         [Header("Dialogue UI")]
-        public TextMeshUGUI dialogueText;
-        public TextMeshUGUI speakerNameText;
+        public TMP_Text dialogueText;
+        public TMP_Text speakerNameText;
         public Image portraitImage;
         public Button continueButton;
 
         [Header("Prompts")]
         public GameObject promptPanel;
-        public TextMeshUGUI promptMessage;
+        public TMP_Text promptMessage;
 
         private Action pendingQuestAction;
 

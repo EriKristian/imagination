@@ -11,7 +11,6 @@ namespace Imagination.Gameplay
         private Rigidbody2D rb;
         private Vector2 moveInput;
         private bool useTouch = true;
-        private Vector2 touchStartPos;
 
         private bool isWalking = false;
 
@@ -22,7 +21,7 @@ namespace Imagination.Gameplay
 
         private void Start()
         {
-            UIManager.Instance.ToggleTouchControls(useTouch);
+            UI.UIManager.Instance.ToggleTouchControls(useTouch);
         }
 
         private void Update()
@@ -50,15 +49,15 @@ namespace Imagination.Gameplay
 
             if (touch.phase == TouchPhase.Began)
             {
-                touchStartPos = touch.position;
+                // touch start position handled implicitly
             }
 
             if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
             {
-                Vector2 direction = touch.position - touchStartPos;
-                if (direction.magnitude > touchThreshold)
+                Vector2 direction = ((Vector2)Camera.main.ScreenToWorldPoint(touch.position) - (Vector2)transform.position).normalized;
+                if (direction.magnitude > 0.1f)
                 {
-                    moveInput = direction.normalized;
+                    moveInput = direction;
                     SetWalking(true);
                 }
                 else
@@ -81,10 +80,7 @@ namespace Imagination.Gameplay
 
         private void SetWalking(bool walking)
         {
-            if (walking != isWalking)
-            {
-                isWalking = walking;
-            }
+            isWalking = walking;
         }
 
         public void DisableMovement()

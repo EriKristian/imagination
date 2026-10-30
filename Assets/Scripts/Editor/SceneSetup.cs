@@ -9,8 +9,6 @@ using Imagination.Gameplay;
 
 public static class SceneSetup
 {
-    private const string SCENES_DIR = "Assets/Scenes";
-
     [MenuItem("Imagination/Setup/Create All Scenes")]
     public static void CreateAllScenes()
     {
@@ -45,11 +43,9 @@ public static class SceneSetup
 
     private static void CreateBootstrapScene()
     {
-        var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultSetup, NewSceneMode.Single);
+        var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
 
         var go = new GameObject("Bootstrap");
-        Object.DontDestroyOnLoad(go);
-
         go.AddComponent<GameManager>();
         go.AddComponent<SceneLoader>();
         go.AddComponent<SaveManager>();
@@ -69,7 +65,7 @@ public static class SceneSetup
 
     private static void CreateMenuScene()
     {
-        var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultSetup, NewSceneMode.Single);
+        var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
 
         var canvasGO = new GameObject("UIRoot");
         var canvas = canvasGO.AddComponent<Canvas>();
@@ -94,7 +90,7 @@ public static class SceneSetup
 
     private static void CreateClassroomScene()
     {
-        var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultSetup, NewSceneMode.Single);
+        var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
 
         var camGO = new GameObject("Main Camera");
         var cam = camGO.AddComponent<Camera>();
@@ -120,7 +116,7 @@ public static class SceneSetup
 
     private static void CreateFightingScene()
     {
-        var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultSetup, NewSceneMode.Single);
+        var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
 
         var camGO = new GameObject("Main Camera");
         var cam = camGO.AddComponent<Camera>();
@@ -179,8 +175,8 @@ public static class SceneSetup
 
     private static void CreateMenuButtons(GameObject parent)
     {
-        string[] buttons = { "NewGameButton", "ContinueButton", "SettingsButton", "QuitButton" };
-        foreach (var btnName in buttons)
+        string[] btnNames = { "NewGameButton", "ContinueButton", "SettingsButton", "QuitButton" };
+        foreach (var btnName in btnNames)
         {
             var btnGO = new GameObject(btnName);
             btnGO.transform.SetParent(parent.transform);

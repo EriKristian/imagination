@@ -1,5 +1,8 @@
 using UnityEngine;
+using Imagination.Data;
+using Imagination.Managers;
 
+using Imagination.Core;
 namespace Imagination.Managers
 {
     public class ProgressionManager : MonoBehaviour

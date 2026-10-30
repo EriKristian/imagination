@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Imagination.Gameplay
@@ -9,10 +10,6 @@ namespace Imagination.Gameplay
         public Managers.QuestType questType = Managers.QuestType.Fighting;
         public int questLevel = 1;
         public float interactionRadius = 1.5f;
-
-        [Header("Dialogue")]
-        public string firstTimeDialogId = "npc1_first";
-        public string repeatableDialogId = "npc1_repeat";
 
         private Transform player;
         private bool isInRange = false;
@@ -35,10 +32,10 @@ namespace Imagination.Gameplay
             isInRange = distance <= interactionRadius;
 
             if (isInRange && !wasInRange)
-                UIManager.Instance?.ShowPrompt("Tekan untuk berinteraksi");
+                UI.UIManager.Instance?.ShowPrompt("Tekan untuk berinteraksi");
 
             if (!isInRange && wasInRange)
-                UIManager.Instance?.HidePrompt();
+                UI.UIManager.Instance?.HidePrompt();
 
             if (isInRange && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
             {
@@ -51,7 +48,7 @@ namespace Imagination.Gameplay
             if (other.CompareTag("Player"))
             {
                 isInRange = true;
-                UIManager.Instance?.ShowPrompt("Tekan untuk berinteraksi");
+                UI.UIManager.Instance?.ShowPrompt("Tekan untuk berinteraksi");
             }
         }
 
@@ -60,7 +57,7 @@ namespace Imagination.Gameplay
             if (other.CompareTag("Player"))
             {
                 isInRange = false;
-                UIManager.Instance?.HidePrompt();
+                UI.UIManager.Instance?.HidePrompt();
             }
         }
 
@@ -72,7 +69,7 @@ namespace Imagination.Gameplay
                 var quest = Managers.QuestManager.Instance.GetFirstAvailableQuest(questType);
                 if (quest != null)
                 {
-                    UIManager.Instance.ShowQuestDialogue(npcName, quest.title, quest.description, () =>
+                    UI.UIManager.Instance.ShowQuestDialogue(npcName, quest.title, quest.description, () =>
                     {
                         Managers.QuestManager.Instance.UnlockQuest(quest.questId);
                         EnterGameplayMode();
@@ -84,24 +81,24 @@ namespace Imagination.Gameplay
                 var nextQuest = GetNextUnlockedQuest();
                 if (nextQuest != null)
                 {
-                    UIManager.Instance.ShowQuestDialogue(npcName, nextQuest.title, nextQuest.description, () =>
+                    UI.UIManager.Instance.ShowQuestDialogue(npcName, nextQuest.title, nextQuest.description, () =>
                     {
                         EnterGameplayMode();
                     });
                 }
                 else
                 {
-                    UIManager.Instance.ShowDialogueSimple(npcName, "Kamu sudah menyelesaikan semua tantangan ku!", null);
+                    UI.UIManager.Instance.ShowDialogueSimple(npcName, "Kamu sudah menyelesaikan semua tantangan ku!", null);
                 }
             }
         }
 
         private Managers.Quest GetNextUnlockedQuest()
         {
-            var quests = new System.Collections.Generic.List<Managers.Quest>();
-            foreach (var q in new[] { "fighting_1", "fighting_2", "fighting_3" })
+            var quests = new List<Managers.Quest>();
+            foreach (var id in new[] { "fighting_1", "fighting_2", "fighting_3" })
             {
-                var quest = Managers.QuestManager.Instance.GetQuest(q);
+                var quest = Managers.QuestManager.Instance.GetQuest(id);
                 if (quest != null)
                     quests.Add(quest);
             }
@@ -120,7 +117,7 @@ namespace Imagination.Gameplay
             if (playerCtrl != null)
                 playerCtrl.DisableMovement();
 
-            SceneLoader.Instance.LoadScene("Fighting_Level1");
+            Core.SceneLoader.Instance.LoadScene("Fighting_Level1");
         }
     }
 }

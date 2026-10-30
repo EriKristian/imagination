@@ -1,5 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Imagination.Core;
+using Imagination.Managers;
+using TMPro;
 
 namespace Imagination.UI
 {
@@ -27,20 +30,9 @@ namespace Imagination.UI
             LoadSettingsUI();
         }
 
-        private void OnNewGame()
-        {
-            GameManager.Instance.StartNewGame();
-        }
-
-        private void OnContinue()
-        {
-            GameManager.Instance.ContinueGame();
-        }
-
-        private void OnSettings()
-        {
-            settingsPanel.SetActive(true);
-        }
+        private void OnNewGame() => GameManager.Instance.StartNewGame();
+        private void OnContinue() => GameManager.Instance.ContinueGame();
+        private void OnSettings() => settingsPanel.SetActive(true);
 
         private void OnQuit()
         {
@@ -88,9 +80,6 @@ namespace Imagination.UI
             SaveManager.Instance.SaveGame();
         }
 
-        public void OnBackFromSettings()
-        {
-            settingsPanel.SetActive(false);
-        }
+        public void OnBackFromSettings() => settingsPanel.SetActive(false);
     }
 }
