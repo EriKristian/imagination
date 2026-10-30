@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using Imagination.Managers;
 using Imagination.Core;
 
@@ -22,6 +23,17 @@ namespace Imagination.Core
             Instance = this;
             DontDestroyOnLoad(gameObject);
             InitializeManagers();
+
+            // Auto-start the game flow: show MainMenu
+            StartCoroutine(StartGameFlow());
+        }
+
+        private IEnumerator StartGameFlow()
+        {
+            // Wait for all managers to initialize
+            yield return new WaitForSeconds(0.1f);
+            // Load MainMenu
+            SceneLoader.Instance.LoadSceneImmediate("MainMenu");
         }
 
         private void InitializeManagers()
