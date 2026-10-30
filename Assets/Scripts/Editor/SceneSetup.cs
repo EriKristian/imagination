@@ -111,10 +111,19 @@ public static class SceneSetup
         cam.orthographic = true;
         cam.orthographicSize = 5;
 
+        // Add background
+        var bgGO = new GameObject("Background");
+        bgGO.transform.SetParent(camGO.transform);
+        bgGO.transform.localPosition = new Vector3(0, 0, 5);
+        bgGO.transform.localScale = new Vector3(20, 10, 1);
+        var bgSR = bgGO.AddComponent<SpriteRenderer>();
+        bgSR.sortingOrder = -10;
+
         var playerGO = new GameObject("Player");
         playerGO.transform.position = Vector2.zero;
         var playerRb = playerGO.AddComponent<Rigidbody2D>();
         playerRb.bodyType = RigidbodyType2D.Kinematic;
+        playerGO.AddComponent<SpriteRenderer>();
         playerGO.AddComponent<PlayerController>();
         playerGO.AddComponent<BoxCollider2D>();
         playerGO.tag = "Player";

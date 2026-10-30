@@ -83,6 +83,15 @@ public static class ProceduralSpriteGenerator
 
     public static Sprite GetOrCreateSpriteFor(string name)
     {
+        // First try FreeAssets (downloaded Kenney sprites)
+        string freeAssetPath = FindMatchingAsset(name);
+        if (freeAssetPath != null)
+        {
+            var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(freeAssetPath);
+            if (tex) return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+        }
+
+        // Fallback to procedural placeholders
         foreach (var (key, color) in ColorScheme)
         {
             if (name.Contains(key))
@@ -95,6 +104,30 @@ public static class ProceduralSpriteGenerator
         string pathDefault = $"{SpriteFolder}/Default.png";
         var texDefault = AssetDatabase.LoadAssetAtPath<Texture2D>(pathDefault);
         if (texDefault) return Sprite.Create(texDefault, new Rect(0, 0, texDefault.width, texDefault.height), new Vector2(0.5f, 0.5f));
+        return null;
+    }
+
+    private static string FindMatchingAsset(string goName)
+    {
+        if (!AssetDatabase.IsValidFolder("Assets/Art/FreeAssets")) return null;
+
+        // Mapping: GameObject name -> filename
+        // Player -> player_stand.png
+        // Opponent -> enemy_float_1.png
+        // NPC_Fighter -> npc_fighter.png
+        // NPC_Racer -> npc_racer.png
+        // NPC_Platformer -> npc_platformer.png
+        // NPC -> npc_fighter.png (fallback)
+        // Background -> background_1.png
+
+        if (goName.Contains("Player")) return "Assets/Art/FreeAssets/player_stand.png";
+        if (goName.Contains("Opponent")) return "Assets/Art/FreeAssets/enemy_float_1.png";
+        if (goName.Contains("NPC_Fighter")) return "Assets/Art/FreeAssets/npc_fighter.png";
+        if (goName.Contains("NPC_Racer")) return "Assets/Art/FreeAssets/npc_racer.png";
+        if (goName.Contains("NPC_Platformer")) return "Assets/Art/FreeAssets/npc_platformer.png";
+        if (goName.Contains("NPC")) return "Assets/Art/FreeAssets/npc_fighter.png";
+        if (goName.Contains("Background")) return "Assets/Art/FreeAssets/background_1.png";
+
         return null;
     }
 
