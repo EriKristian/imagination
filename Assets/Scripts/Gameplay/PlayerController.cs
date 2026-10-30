@@ -75,7 +75,7 @@ namespace Imagination.Gameplay
 
         private void HandleMovement()
         {
-            rb.velocity = moveInput * moveSpeed;
+            rb.linearVelocity = moveInput * moveSpeed;
         }
 
         private void SetWalking(bool walking)
@@ -85,7 +85,7 @@ namespace Imagination.Gameplay
 
         public void DisableMovement()
         {
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             moveInput = Vector2.zero;
             enabled = false;
         }

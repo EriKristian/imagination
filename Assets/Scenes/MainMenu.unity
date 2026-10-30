@@ -811,7 +811,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1814444529}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1243950402
 GameObject:
   m_ObjectHideFlags: 0
@@ -892,7 +904,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1814444529}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1321901881
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,11 +1127,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b26bbb626201b4f8837647a10c3dbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Imagination.UI.MenuController
-  newGameButton: {fileID: 0}
-  continueButton: {fileID: 0}
-  settingsButton: {fileID: 0}
-  quitButton: {fileID: 0}
-  settingsPanel: {fileID: 0}
+  newGameButton: {fileID: 1232756992}
+  continueButton: {fileID: 1243950404}
+  settingsButton: {fileID: 398579156}
+  quitButton: {fileID: 956008814}
+  settingsPanel: {fileID: 398579154}
   masterVolumeSlider: {fileID: 0}
   musicVolumeSlider: {fileID: 0}
   sfxVolumeSlider: {fileID: 0}

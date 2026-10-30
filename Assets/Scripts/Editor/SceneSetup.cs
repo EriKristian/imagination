@@ -82,7 +82,16 @@ public static class SceneSetup
         menuRect.offsetMax = Vector2.zero;
 
         CreateMenuButtons(menuGO);
-        menuGO.AddComponent<MenuController>();
+        var menuCtrl = menuGO.AddComponent<MenuController>();
+        // Assign buttons to MenuController fields
+        var allBtns = menuGO.GetComponentsInChildren<Button>(true);
+        if (allBtns.Length >= 4)
+        {
+            menuCtrl.newGameButton = allBtns[0];
+            menuCtrl.continueButton = allBtns[1];
+            menuCtrl.settingsButton = allBtns[2];
+            menuCtrl.quitButton = allBtns[3];
+        }
 
         EditorSceneManager.SaveScene(scene, "Assets/Scenes/MainMenu.unity", false);
         Debug.Log("[SceneSetup] Created MainMenu.unity");
@@ -180,12 +189,17 @@ public static class SceneSetup
         {
             var btnGO = new GameObject(btnName);
             btnGO.transform.SetParent(parent.transform);
-            btnGO.AddComponent<RectTransform>();
+            var btnRect = btnGO.AddComponent<RectTransform>();
+            btnRect.offsetMin = new Vector2(0, 0);
+            btnRect.offsetMax = new Vector2(0, 0);
             var btn = btnGO.AddComponent<Button>();
             var textGO = new GameObject("Text");
             textGO.transform.SetParent(btnGO.transform);
-            textGO.AddComponent<RectTransform>();
-            textGO.AddComponent<Text>();
+            var textRect = textGO.AddComponent<RectTransform>();
+            textRect.offsetMin = Vector2.zero;
+            textRect.offsetMax = Vector2.zero;
+            var text = textGO.AddComponent<Text>();
+            text.text = btnName.Replace("Button", "").Replace("Settings", "Settings").Replace("Quit", "Quit");
         }
     }
 

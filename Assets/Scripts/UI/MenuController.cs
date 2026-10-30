@@ -22,12 +22,32 @@ namespace Imagination.UI
 
         private void Start()
         {
+            AssignButtons();
             newGameButton.onClick.AddListener(OnNewGame);
             continueButton.onClick.AddListener(OnContinue);
             settingsButton.onClick.AddListener(OnSettings);
             quitButton.onClick.AddListener(OnQuit);
 
             LoadSettingsUI();
+        }
+
+        /// <summary>
+        /// Cari dan assign semua button dari hierarchy ke field publik.
+        /// Panggil ini sekali di Start(), atau drag manual di Inspector.
+        /// </summary>
+        private void AssignButtons()
+        {
+            if (newGameButton == null)
+                newGameButton = GetComponentInChildren<Button>(includeInactive: false);
+            // Cari sibling buttons
+            var buttons = GetComponentsInChildren<Button>();
+            if (buttons.Length >= 4)
+            {
+                newGameButton = buttons[0];
+                continueButton = buttons[1];
+                settingsButton = buttons[2];
+                quitButton = buttons[3];
+            }
         }
 
         private void OnNewGame() => GameManager.Instance.StartNewGame();
@@ -81,5 +101,18 @@ namespace Imagination.UI
         }
 
         public void OnBackFromSettings() => settingsPanel.SetActive(false);
+
+        // === Public methods untuk dipanggil via Inspector OnClick ===
+        public void NewGame() => GameManager.Instance.StartNewGame();
+        public void ContinueGame() => GameManager.Instance.ContinueGame();
+        public void OpenSettings() { if (settingsPanel != null) settingsPanel.SetActive(true); }
+        public void QuitGame()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
     }
 }
